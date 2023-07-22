@@ -14,3 +14,4 @@ class GameSprite(sprite.Sprite):
         virtual_surface.blit(self.image, (self.rect.x, self.rect.y))
 
 
+

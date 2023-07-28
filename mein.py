@@ -14,4 +14,26 @@ class GameSprite(sprite.Sprite):
         virtual_surface.blit(self.image, (self.rect.x, self.rect.y))
 
 
+class Ball(GameSprite):
+    def __init__(self):
+        super().__init__("images/ball.png", WIDTH // 2 - 25, HEIGHT // 2 - 25, 50, 50, 10)
+
+
+class Platform(GameSprite):
+    def __init__(self, player_num):
+        self.player_num = player_num
+        if self.player_num == 1:
+            self.x = 100
+            self.angle = -90
+        if self.player_num == 2:
+            self.x = WIDTH - 120
+            self.angle = 90
+
+        super().__init__("images/platform.png", 0, 0, 150, 20, 10)
+
+        self.image = transform.rotate(self.image, self.angle)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = HEIGHT // 2 - 75
 

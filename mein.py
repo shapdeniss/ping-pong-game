@@ -37,3 +37,47 @@ class Platform(GameSprite):
         self.rect.x = self.x
         self.rect.y = HEIGHT // 2 - 75
 
+
+WIDTH = 1280
+HEIGHT = 720
+
+ASPECT_RATIO = WIDTH / HEIGHT
+
+window = display.set_mode((WIDTH, HEIGHT), RESIZABLE)
+display.set_caption("Ping-pong")
+clock = time.Clock()
+
+virtual_surface = Surface((WIDTH, HEIGHT))
+current_size = window.get_size()
+
+ball = Ball()
+
+player_1 = Platform(1)
+player_2 = Platform(2)
+
+finish = True
+game = True
+while game:
+    for e in event.get():
+        if e.type == QUIT:
+            exit()
+        if e.type == KEYDOWN:
+            if e.type == K_ESCAPE:
+                exit()
+        if e.type == VIDEORESIZE:
+            new_width = e.w
+            new_height = int(new_width / ASPECT_RATIO)
+            window = display.set_mode((new_width, new_height), RESIZABLE)
+            current_size = window.get_size()
+
+    virtual_surface.fill((240, 238, 180))
+
+    ball.reset()
+
+    player_1.reset()
+    player_2.reset()
+
+    scaled_surface = transform.scale(virtual_surface, current_size)
+    window.blit(scaled_surface, (0, 0))
+    clock.tick(60)
+    display.update()
